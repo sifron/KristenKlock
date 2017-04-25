@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
     private Context context;
+    private int alarmID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         context = this.getApplicationContext();
         alarmMgr = (AlarmManager) this.getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra("alarmID", alarmID++);
         alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
         time = (TimePicker) findViewById(R.id.timePicker);
@@ -51,5 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
         Log.v("TAG", "Hour: " + hour + ", Minute: " + minute);
         Log.v("TAG", "" + calendar.getTimeInMillis());
+    }
+
+    public void cancelAlarm() {
+        alarmMgr.cancel(alarmIntent);
     }
 }
