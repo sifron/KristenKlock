@@ -1,14 +1,18 @@
 package tech.anora.kristenklock;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -49,7 +53,39 @@ public class MainActivity extends AppCompatActivity {
 
         alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
 
+        Context context = getApplicationContext();
+        showSetToast(hour,minute);
+
         Log.v("TAG", "Hour: " + hour + ", Minute: " + minute);
         Log.v("TAG", "" + calendar.getTimeInMillis());
+
     }
+
+    protected void showSetToast(int hour, int minute)
+    {
+        //Convert time to 12 hour time for toast
+        int timeHour;
+        String timeMin = Integer.toString(minute);
+        String amOrPm;
+        if (hour > 12)
+        {
+            timeHour = hour % 12;
+            amOrPm = "PM";
+        }
+        else
+        {
+            timeHour = hour;
+            amOrPm = "AM";
+        }
+
+        if(minute < 10)
+            timeMin = "0" + timeMin;
+
+        CharSequence text = "Alarm set for " + timeHour + ":" + timeMin + " " + amOrPm;
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
 }
