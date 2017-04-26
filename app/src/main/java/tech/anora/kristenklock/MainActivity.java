@@ -19,8 +19,8 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
     private TimePicker time;
-    private AlarmManager alarmMgr;
-    private PendingIntent alarmIntent;
+    private static AlarmManager alarmMgr;
+    private static PendingIntent alarmIntent;
     private Context context;
     private int alarmID = 0;
 
@@ -30,11 +30,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         context = this.getApplicationContext();
-        alarmMgr = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(context, AlarmReceiver.class);
-        intent.putExtra("alarmID", alarmID++);
-        alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-
         time = (TimePicker) findViewById(R.id.timePicker);
     }
 
@@ -52,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
         if(System.currentTimeMillis() >= calendar.getTimeInMillis()) {
             calendar.add(Calendar.DATE, 1);
         }
+
+        alarmMgr = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra("alarmID", alarmID);
+        alarmIntent = PendingIntent.getBroadcast(context, alarmID++, intent, 0);
 
         alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
 
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public void cancelAlarm() {
-        alarmMgr.cancel(alarmIntent);
+    public static void cancelAlarm(Context context, Intent intent, int intentID) {
+        alarmMgr.cancel(PendingIntent.getBroadcast(context, intentID, intent, PendingIntent.FLAG_UPDATE_CURRENT));
     }
 }

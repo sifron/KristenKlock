@@ -84,7 +84,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(_context);
         stackBuilder.addParentStack(MainActivity.class);
 
-// Adds the Intent that starts the Activity to the top of the stack
+        // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
@@ -98,7 +98,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
             float y = (float) Math.pow(event.values[1], 2);
             float z = (float) Math.pow(event.values[2], 2);
             float val = (float) Math.sqrt(x + y + z);
-            Log.v("ACCEL: ", "" + val);
+//            Log.v("ACCEL: ", "" + val);
             if(val > 13.0) {
                 noMotion = false;
             }
@@ -106,7 +106,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
 
         if(event.sensor.getStringType().equals(Sensor.STRING_TYPE_LIGHT)) {
             float val = event.values[0];
-            Log.v("LIGHT: ", "" + val);
+//            Log.v("LIGHT: ", "" + val);
             if(val > 400.0) {
                 noLight = false;
             }
@@ -115,7 +115,10 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
         if(!noMotion && !noLight) {
             r.stop();
             int alarmID = _intent.getExtras().getInt("alarmID");
-            PendingIntent.getBroadcast(_context, alarmID, _intent, PendingIntent.FLAG_UPDATE_CURRENT).cancel();
+            Log.v("TAG", "" + alarmID);
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(_context, alarmID, _intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmIntent.cancel();
+            MainActivity.cancelAlarm(_context, _intent, alarmID);
         }
     }
 
