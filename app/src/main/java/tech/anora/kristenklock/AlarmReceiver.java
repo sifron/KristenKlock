@@ -1,9 +1,7 @@
 package tech.anora.kristenklock;
 
-<<<<<<< HEAD
+
 import android.app.NotificationManager;
-=======
->>>>>>> origin/master
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -36,19 +34,15 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
     boolean noLight = true;
     boolean noMotion = true;
     Ringtone r;
-    Context _context;
     Intent _intent;
 
     Context _context;
     @Override
     public void onReceive(Context context, Intent intent) {
-<<<<<<< HEAD
 
         _context = context;
-=======
-        _context = context;
         _intent = intent;
->>>>>>> origin/master
+
         Log.v("TAG", "Alarm has gone off!");
 
         sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
@@ -69,7 +63,6 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
         r = RingtoneManager.getRingtone(context, u);
         r.play();
 
-<<<<<<< HEAD
         showNotifications();
 
     }
@@ -82,15 +75,20 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
                         .setContentTitle("Kristen Klock")
                         .setContentText("Time to wake up!");
 
-
-// Gets an instance of the NotificationManager service//
-
-        NotificationManager mNotificationManager =
-
-                (NotificationManager) _context.getSystemService(Context.NOTIFICATION_SERVICE);
+        // Gets an instance of the NotificationManager service//
+        NotificationManager mNotificationManager = (NotificationManager) _context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         mNotificationManager.notify(001, mBuilder.build());
-=======
+
+        Intent resultIntent = new Intent(_context, MainActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(_context);
+        stackBuilder.addParentStack(MainActivity.class);
+
+// Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(resultPendingIntent);
+
     }
 
     @Override
@@ -123,7 +121,6 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
->>>>>>> origin/master
 
     }
 
