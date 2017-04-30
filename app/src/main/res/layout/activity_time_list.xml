@@ -4,22 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="tech.anora.kristenklock.MainActivity">
-
-    <TimePicker
-        android:id="@+id/timePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></TimePicker>
-
-    <Button
-        android:text="Set Alarm"
-        android:id="@+id/set"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/timePicker"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="setAlarm"/>
+    tools:context="tech.anora.kristenklock.TimeList">
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"
@@ -28,14 +13,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ListView
+            android:id="@+id/alarmsList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#FFFFFF" >
+
+        </ListView>
+
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right|end"
+            android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
             app:layout_anchorGravity="bottom|right|end"
-            android:src="@drawable/ic_list_white_24dp"
-            android:onClick="launchAlarmsList"/>
+            android:src="@drawable/ic_home_white_24dp"
+            android:onClick="launchMainActivity"/>
 
     </android.support.design.widget.CoordinatorLayout>
 
