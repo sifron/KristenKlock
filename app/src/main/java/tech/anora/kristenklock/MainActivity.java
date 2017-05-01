@@ -1,19 +1,20 @@
 package tech.anora.kristenklock;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import java.util.ArrayList;
+
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private PendingIntent alarmIntent;
     private Context context;
     private int alarmID = 0;
-    public List<Date> timeList = new ArrayList<Date>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +54,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
-
-        Date tempDate = new Date();
-        tempDate.setTime(calendar.getTimeInMillis());
-        timeList.add(tempDate);
 
         Context context = getApplicationContext();
         showSetToast(hour,minute);
@@ -96,11 +92,5 @@ public class MainActivity extends AppCompatActivity {
 
     public void cancelAlarm() {
         alarmMgr.cancel(alarmIntent);
-    }
-
-    public void launchAlarmsList(View view)
-    {
-        Intent myIntent = new Intent(this, TimeList.class);
-        this.startActivity(myIntent);
     }
 }
