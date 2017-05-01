@@ -12,7 +12,11 @@
         android:id="@+id/timeText"
         android:layout_width="0dp"
         android:layout_weight=".40"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:text="4:15 PM"
+        android:textSize="30dp"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="30dp"/>
 
     <Switch
         android:id="@+id/timeSwitch"
@@ -25,7 +29,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_delete_white_24dp"
-        />
+        android:src="@drawable/ic_delete_white_24dp" />
 
 </LinearLayout>

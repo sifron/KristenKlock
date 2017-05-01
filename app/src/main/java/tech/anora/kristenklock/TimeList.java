@@ -9,11 +9,14 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 public class TimeList extends AppCompatActivity {
 
+    private List<SensorAlarm> alarmsList = MainActivity.getAlarms();
     private ListView alarmsListView ;
-    private ArrayAdapter<String> listAdapter ;
+    private ArrayAdapter<SensorAlarm> listAdapter ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +26,13 @@ public class TimeList extends AppCompatActivity {
         // Find the ListView resource.
         alarmsListView = (ListView) findViewById( R.id.alarmsList );
 
-        // Create and populate a List of planet names.
+        //listAdapter = new ArrayAdapter<String>(this, R.layout.alarm_list_item, R.id.timeText, alarmsList);
+        //listAdapter = new ArrayAdapter<>(this, R.layout.alarm_list_item, alarmsList);
+
+
+        alarmsListView.setAdapter(listAdapter);
+
+/*        // Create and populate a List of planet names.
         String[] planets = new String[] { "Mercury", "Venus", "Earth", "Mars",
                 "Jupiter", "Saturn", "Uranus", "Neptune"};
         ArrayList<String> planetList = new ArrayList<>();
@@ -31,22 +40,7 @@ public class TimeList extends AppCompatActivity {
 
         // Create ArrayAdapter using the planet list.
         listAdapter = new ArrayAdapter<>(this, R.layout.simplerow, planetList);
-
-        // Add more planets. If you passed a String[] instead of a List<String>
-        // into the ArrayAdapter constructor, you must not add more items.
-        // Otherwise an exception will occur.
-        listAdapter.add( "Ceres" );
-        listAdapter.add( "Pluto" );
-        listAdapter.add( "Haumea" );
-        listAdapter.add( "Makemake" );
-        listAdapter.add( "Eris" );
-        listAdapter.add( "Pluto" );
-        listAdapter.add( "Scott" );
-        listAdapter.add( "Andromeda" );
-        listAdapter.add( "Rae" );
-        listAdapter.add( "Canto" );
-
-        alarmsListView.setAdapter(listAdapter);
+*/
     }
 
     public void launchMainActivity(View view)
