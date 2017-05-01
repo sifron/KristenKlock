@@ -41,15 +41,10 @@ public class TimeList extends AppCompatActivity {
         listAdapter.add( "Makemake" );
         listAdapter.add( "Eris" );
         listAdapter.add( "Pluto" );
-
         listAdapter.add( "Scott" );
-
         listAdapter.add( "Andromeda" );
-
         listAdapter.add( "Rae" );
-
         listAdapter.add( "Canto" );
-
 
         alarmsListView.setAdapter(listAdapter);
     }

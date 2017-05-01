@@ -28,7 +28,7 @@
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
             app:layout_anchorGravity="bottom|right|end"
-            android:src="@drawable/ic_home_white_36dp"
+            android:src="@drawable/ic_alarm_add_white_24dp"
             android:onClick="launchMainActivity"/>
 
     </android.support.design.widget.CoordinatorLayout>
