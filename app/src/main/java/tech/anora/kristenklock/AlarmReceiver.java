@@ -120,7 +120,6 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
             Log.v("TAG", "" + alarmID);
             PendingIntent alarmIntent = PendingIntent.getBroadcast(_context, alarmID, _intent, PendingIntent.FLAG_UPDATE_CURRENT);
             alarmIntent.cancel();
-            MainActivity.cancelAlarm(_context, _intent, alarmID);
         }
     }
 

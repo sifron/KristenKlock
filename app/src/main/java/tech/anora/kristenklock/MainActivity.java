@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public void cancelAlarm() {
-        alarmMgr.cancel(alarmIntent);
-    }
+//    public void cancelAlarm() {
+//        alarmMgr.cancel(alarmIntent);
+//    }
 }
