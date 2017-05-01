@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
-        toast.setGravity(Gravity.BOTTOM, 0, 265);
+        toast.setGravity(Gravity.BOTTOM, 0, 285);
         toast.show();
     }
 
