@@ -22,7 +22,8 @@
 
         <receiver android:name=".AlarmReceiver" />
 
-        <activity android:name=".TimeList"></activity>
+        <activity android:name=".TimeList"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
