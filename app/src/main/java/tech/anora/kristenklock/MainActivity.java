@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         alarms = new ArrayList<SensorAlarm>();
+        light_threshold = 200.0;
 
         context = this.getApplicationContext();
         alarmMgr = (AlarmManager) this.getSystemService(ALARM_SERVICE);
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
-        toast.setGravity(Gravity.BOTTOM, 0, 66);
+        toast.setGravity(Gravity.BOTTOM, 0, 245);
         toast.show();
     }
 

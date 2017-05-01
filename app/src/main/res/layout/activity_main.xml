@@ -13,15 +13,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"></TimePicker>
 
-    <Button
-        android:text="Set Alarm"
-        android:id="@+id/set"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/timePicker"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="setAlarm"/>
+    <!--<SeekBar-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_width="150dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/timePicker"-->
+        <!--android:layout_marginTop="40dp"/>-->
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"
@@ -40,6 +37,15 @@
             app:layout_anchorGravity="bottom|right|end"
             android:src="@drawable/ic_settings_white_24dp"
             android:onClick="showCalibrationDialog"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="16dp"
+            app:layout_anchorGravity="bottom|center"
+            android:src="@drawable/ic_alarm_add_white_24dp"
+            android:onClick="setAlarm"/>
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
