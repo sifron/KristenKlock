@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private static PendingIntent alarmIntent;
     private Context context;
     private int alarmID = 0;
+    CalibrationDialog prompt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         context = this.getApplicationContext();
         time = (TimePicker) findViewById(R.id.timePicker);
+        prompt = new CalibrationDialog();
+        prompt.show(getSupportFragmentManager(), "calibrate");
+
     }
 
     public void setAlarm(View v) {

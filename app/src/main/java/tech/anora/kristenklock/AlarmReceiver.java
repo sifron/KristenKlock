@@ -114,6 +114,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
 
         if(!noMotion && !noLight) {
             r.stop();
+            sm.unregisterListener(this, accelSensor);
+            sm.unregisterListener(this, lightSensor);
             int alarmID = _intent.getExtras().getInt("alarmID");
             Log.v("TAG", "" + alarmID);
             PendingIntent alarmIntent = PendingIntent.getBroadcast(_context, alarmID, _intent, PendingIntent.FLAG_UPDATE_CURRENT);
