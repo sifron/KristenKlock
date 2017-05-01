@@ -3,24 +3,29 @@
     android:id="@+id/timeListItem"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="10dp"
     android:textSize="16sp" >
+    
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/rowTextView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textSize="16sp" >
-    </TextView>
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="0dp"
+        android:layout_weight=".40"
+        android:layout_height="match_parent" />
+
+    <Switch
+        android:id="@+id/timeSwitch"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.09" />
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
-        android:src="@android:drawable/ic_menu_delete"
+        android:src="@drawable/ic_delete_white_24dp"
         />
 
 </LinearLayout>
