@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private PendingIntent alarmIntent;
     private Context context;
     private int alarmID = 0;
+    private static double light_threshold;
+    private CalibrationDialog calibrate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra("alarmID", alarmID++);
         alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        calibrate = new CalibrationDialog();
+        calibrate.show(getSupportFragmentManager(), "calibrate");
 
         time = (TimePicker) findViewById(R.id.timePicker);
     }
@@ -87,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
+        toast.setGravity(Gravity.BOTTOM, 0, 66);
         toast.show();
     }
 
@@ -94,9 +100,17 @@ public class MainActivity extends AppCompatActivity {
 //        alarmMgr.cancel(alarmIntent);
 //    }
 
+    public static void setLightThreshhold(double val) {
+        light_threshold = val;
+    }
+
     public void launchAlarmsList(View view)
     {
         Intent myIntent = new Intent(this, TimeList.class);
         this.startActivity(myIntent);
+    }
+
+    public void showCalibrationDialog(View v) {
+        calibrate.show(getSupportFragmentManager(), "calibrate");
     }
 }
