@@ -93,4 +93,10 @@ public class MainActivity extends AppCompatActivity {
 //    public void cancelAlarm() {
 //        alarmMgr.cancel(alarmIntent);
 //    }
+
+    public void launchAlarmsList(View view)
+    {
+        Intent myIntent = new Intent(this, TimeList.class);
+        this.startActivity(myIntent);
+    }
 }
