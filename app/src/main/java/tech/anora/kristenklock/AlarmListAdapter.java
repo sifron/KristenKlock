@@ -23,7 +23,7 @@ public class AlarmListAdapter extends BaseAdapter implements ListAdapter {
     private List<SensorAlarm> alarmsList = MainActivity.getAlarms();
     private Context context;
 
-    public AlarmListAdapter(ArrayList<SensorAlarm> list, Context context)
+    public AlarmListAdapter(List<SensorAlarm> list, Context context)
     {
         this.alarmsList = list;
         this.context = context;

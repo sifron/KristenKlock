@@ -31,24 +31,18 @@ public class TimeList extends AppCompatActivity {
             Log.v("TAG", setTimeString(s.get_calendar()));
         }
 
+
         // Find the ListView resource.
         alarmsListView = (ListView) findViewById( R.id.alarmsList );
 
-        listAdapter = new ArrayAdapter<>(this, R.layout.alarm_list_item, R.id.timeText, times);
-        //listAdapter = new ArrayAdapter<>(this, R.layout.alarm_list_item, alarmsList);
+       // listAdapter = new ArrayAdapter<>(this, R.layout.alarm_list_item, R.id.timeText, times);
+        //listAdapter.add("");
 
+        AlarmListAdapter alarmAdapter = new AlarmListAdapter(alarmsList, this);
 
-        alarmsListView.setAdapter(listAdapter);
+        alarmsListView.setAdapter(alarmAdapter);
+        //alarmsListView.setAdapter(listAdapter);
 
-/*        // Create and populate a List of planet names.
-        String[] planets = new String[] { "Mercury", "Venus", "Earth", "Mars",
-                "Jupiter", "Saturn", "Uranus", "Neptune"};
-        ArrayList<String> planetList = new ArrayList<>();
-        planetList.addAll( Arrays.asList(planets) );
-
-        // Create ArrayAdapter using the planet list.
-        listAdapter = new ArrayAdapter<>(this, R.layout.simplerow, planetList);
-*/
     }
 
     public void launchMainActivity(View view)
