@@ -30,6 +30,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
     private SensorManager sm;
     private Sensor accelSensor;
     private Sensor lightSensor;
+    private double light_threshold;
     private List<Sensor> l;
     boolean noLight = true;
     boolean noMotion = true;
@@ -42,6 +43,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
 
         _context = context;
         _intent = intent;
+        light_threshold = MainActivity.getLightThreshold() - 10;
 
         Log.v("TAG", "Alarm has gone off!");
 
@@ -107,7 +109,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
         if(event.sensor.getStringType().equals(Sensor.STRING_TYPE_LIGHT)) {
             float val = event.values[0];
 //            Log.v("LIGHT: ", "" + val);
-            if(val > 400.0) {
+            if(val > light_threshold) {
                 noLight = false;
             }
         }

@@ -12,28 +12,30 @@ import android.view.View;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private TimePicker time;
-    private AlarmManager alarmMgr;
+    private static AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
     private Context context;
-    private int alarmID = 0;
+    private int alarmID = 7; //start at a non-zero number
     private static double light_threshold;
     private CalibrationDialog calibrate;
+    private static List<SensorAlarm> alarms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        alarms = new ArrayList<SensorAlarm>();
+
         context = this.getApplicationContext();
         alarmMgr = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(context, AlarmReceiver.class);
-        intent.putExtra("alarmID", alarmID++);
-        alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         calibrate = new CalibrationDialog();
         calibrate.show(getSupportFragmentManager(), "calibrate");
 
@@ -41,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setAlarm(View v) {
+
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra("alarmID", alarmID);
+        alarmIntent = PendingIntent.getBroadcast(context, alarmID, intent, 0);
+
         int hour = time.getHour();
         int minute = time.getMinute();
 
@@ -55,10 +62,14 @@ public class MainActivity extends AppCompatActivity {
             calendar.add(Calendar.DATE, 1);
         }
 
+        SensorAlarm alarm = new SensorAlarm(calendar, 14.0, alarmID);
+        alarms.add(alarm);
+
         alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
 
-        Context context = getApplicationContext();
         showSetToast(hour,minute);
+
+        alarmID++;
 
         Log.v("TAG", "Hour: " + hour + ", Minute: " + minute);
         Log.v("TAG", "" + calendar.getTimeInMillis());
@@ -97,10 +108,6 @@ public class MainActivity extends AppCompatActivity {
 //        alarmMgr.cancel(alarmIntent);
 //    }
 
-    public static void setLightThreshhold(double val) {
-        light_threshold = val;
-    }
-
     public void launchAlarmsList(View view)
     {
         Intent myIntent = new Intent(this, TimeList.class);
@@ -109,5 +116,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void showCalibrationDialog(View v) {
         calibrate.show(getSupportFragmentManager(), "calibrate");
+    }
+
+    public static void setLightThreshhold(double val) {
+        light_threshold = val;
+    }
+
+    public static double getLightThreshold() {
+        return light_threshold;
+    }
+
+    public static AlarmManager getAlarmMgr() {
+        return alarmMgr;
+    }
+
+    public static List<SensorAlarm> getAlarms() {
+        return alarms;
     }
 }

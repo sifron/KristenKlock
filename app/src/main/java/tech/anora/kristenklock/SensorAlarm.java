@@ -10,12 +10,14 @@ import java.util.Calendar;
 public class SensorAlarm {
     private Calendar _calendar;
     private double _shake_thresh;
-    private String _name;
+    private int _alarmID;
+    private boolean _isOn;
 
-    public SensorAlarm(Calendar calendar, double shake_thresh, String name) {
+    public SensorAlarm(Calendar calendar, double shake_thresh, int alarmID) {
         _calendar = calendar;
         _shake_thresh = shake_thresh;
-        _name = name;
+        _alarmID = alarmID;
+        _isOn = true;
     }
 
     public Calendar get_calendar() {
@@ -34,11 +36,16 @@ public class SensorAlarm {
         this._shake_thresh = _shake_thresh;
     }
 
-    public String get_name() {
-        return _name;
+    public int get_alarmID() {
+        return _alarmID;
     }
 
-    public void set_name(String _name) {
-        this._name = _name;
+    public void turnOff() {
+        _isOn = false;
     }
+
+    public void turnOn() {
+        _isOn = true;
+    }
+
 }

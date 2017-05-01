@@ -73,7 +73,7 @@ public class CalibrationDialog extends DialogFragment implements SensorEventList
     @Override
     public void onSensorChanged(SensorEvent event) {
         light_threshold = event.values[0];
-        Log.v("TAG", "" + light_threshold);
+        //Log.v("TAG", "" + light_threshold);
     }
 
     @Override

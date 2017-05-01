@@ -51,7 +51,8 @@ public class TimeList extends AppCompatActivity {
 
     public void launchMainActivity(View view)
     {
-        Intent myIntent = new Intent(this, MainActivity.class);
-        this.startActivity(myIntent);
+//        Intent myIntent = new Intent(this, MainActivity.class);
+//        this.startActivity(myIntent);
+        finish();
     }
 }
