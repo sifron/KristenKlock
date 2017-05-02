@@ -64,6 +64,11 @@ public class AlarmListAdapter extends ArrayAdapter<SensorAlarm> {
 
         alarmSwitch = (Switch) convertView.findViewById(R.id.timeSwitch);
 
+        if(alarm.isOn())
+        {
+            alarmSwitch.setChecked(true);
+        }
+
         alarmSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
