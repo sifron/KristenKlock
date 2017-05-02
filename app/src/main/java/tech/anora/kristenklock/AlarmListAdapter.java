@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ import static tech.anora.kristenklock.R.id.alarmsList;
  */
 
 public class AlarmListAdapter extends ArrayAdapter<SensorAlarm> {
+
+    Switch alarmSwitch;
 
     public AlarmListAdapter(Context context, ArrayList<SensorAlarm> alarms)
     {
@@ -55,6 +58,26 @@ public class AlarmListAdapter extends ArrayAdapter<SensorAlarm> {
                 SensorAlarm alarmtoDelete = getItem(position);
                 MainActivity.getAlarms().remove(alarmtoDelete);
                 MainActivity.getAlarmMgr().cancel(PendingIntent.getBroadcast(alarmtoDelete.get_context(), alarmtoDelete.get_alarmID(), alarmtoDelete.get_intent(), PendingIntent.FLAG_UPDATE_CURRENT));
+                notifyDataSetChanged();
+            }
+        });
+
+        alarmSwitch = (Switch) convertView.findViewById(R.id.timeSwitch);
+
+        alarmSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = (Integer) view.getTag();
+                // Access the row position here to get the correct data item
+                SensorAlarm alarmToSwitch = getItem(position);
+                if(alarmSwitch.isChecked())
+                {
+                    alarmToSwitch.turnOn();
+                }
+                else if(!alarmSwitch.isChecked())
+                {
+                    alarmToSwitch.turnOff();
+                }
                 notifyDataSetChanged();
             }
         });

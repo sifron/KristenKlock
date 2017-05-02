@@ -23,8 +23,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.09"
         android:layout_marginRight="15dp"
-        android:onClick="toggleAlarm"
-        android:checked="true" />
+        android:onClick="toggleAlarm" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/deleteButton"
