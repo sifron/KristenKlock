@@ -22,8 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.09"
-        android:layout_marginRight="15dp"
-        android:onClick="toggleAlarm" />
+        android:layout_marginRight="15dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/deleteButton"
@@ -31,7 +30,6 @@
         android:layout_height="40dp"
         android:layout_margin="10dp"
         android:scaleType="center"
-        android:onClick="deleteAlarm"
         android:src="@drawable/ic_delete_white_18dp"
         />
 

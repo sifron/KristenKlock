@@ -1,5 +1,6 @@
 package tech.anora.kristenklock;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.support.annotation.IdRes;
@@ -25,8 +26,6 @@ import static tech.anora.kristenklock.R.id.alarmsList;
  */
 
 public class AlarmListAdapter extends ArrayAdapter<SensorAlarm> {
-
-    Switch alarmSwitch;
 
     public AlarmListAdapter(Context context, ArrayList<SensorAlarm> alarms)
     {
@@ -62,28 +61,42 @@ public class AlarmListAdapter extends ArrayAdapter<SensorAlarm> {
             }
         });
 
-        alarmSwitch = (Switch) convertView.findViewById(R.id.timeSwitch);
+        Switch toggle = (Switch) convertView.findViewById(R.id.timeSwitch);
+        toggle.setTag(position);
 
         if(alarm.isOn())
         {
-            alarmSwitch.setChecked(true);
+            toggle.setChecked(true);
         }
 
-        alarmSwitch.setOnClickListener(new View.OnClickListener() {
+        toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int position = (Integer) view.getTag();
                 // Access the row position here to get the correct data item
-                SensorAlarm alarmToSwitch = getItem(position);
-                if(alarmSwitch.isChecked())
-                {
-                    alarmToSwitch.turnOn();
+                SensorAlarm alarmtoToggle = getItem(position);
+                if(alarmtoToggle.isOn()) {
+                    alarmtoToggle.turnOff();
+                    MainActivity.getAlarmMgr().cancel(PendingIntent.getBroadcast(alarmtoToggle.get_context(), alarmtoToggle.get_alarmID(),
+                            alarmtoToggle.get_intent(), PendingIntent.FLAG_UPDATE_CURRENT));
+                } else {
+                    alarmtoToggle.turnOn();
+                    PendingIntent alarmIntent = PendingIntent.getBroadcast(alarmtoToggle.get_context(), alarmtoToggle.get_alarmID(),
+                            alarmtoToggle.get_intent(), 0);
+
+                    Calendar calendar = alarmtoToggle.get_calendar();
+                    calendar.setTimeInMillis(System.currentTimeMillis());
+                    calendar.set(Calendar.HOUR_OF_DAY, alarmtoToggle.get_calendar().get(Calendar.HOUR_OF_DAY));
+                    calendar.set(Calendar.MINUTE, alarmtoToggle.get_calendar().get(Calendar.MINUTE));
+
+                    //if the alarm is set for a time that has already passed in the
+                    //current day, set it for the next day
+                    if(System.currentTimeMillis() >= calendar.getTimeInMillis()) {
+                        calendar.add(Calendar.DATE, 1);
+                    }
+
+                    MainActivity.getAlarmMgr().set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
                 }
-                else if(!alarmSwitch.isChecked())
-                {
-                    alarmToSwitch.turnOff();
-                }
-                notifyDataSetChanged();
             }
         });
 
