@@ -17,8 +17,6 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
-
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -46,6 +44,15 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
         light_threshold = MainActivity.getLightThreshold() - 10;
 
         Log.v("TAG", "Alarm has gone off!");
+        SensorAlarm alarmGoingOff = null;
+        List<SensorAlarm> alarms = MainActivity.getAlarms();
+        for(SensorAlarm alarm : alarms) {
+            if(alarm.get_alarmID() == _intent.getExtras().getInt("alarmID")) {
+                alarmGoingOff = alarm;
+            }
+        }
+
+        Log.v("TAG", "AlarmID: " + alarmGoingOff.get_alarmID() + ", Time: " + alarmGoingOff.get_calendar().getTimeInMillis());
 
         sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         l = sm.getSensorList(Sensor.TYPE_ALL);
@@ -100,15 +107,14 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
             float y = (float) Math.pow(event.values[1], 2);
             float z = (float) Math.pow(event.values[2], 2);
             float val = (float) Math.sqrt(x + y + z);
-//            Log.v("ACCEL: ", "" + val);
-            if(val > 13.0) {
+            //Log.v("ACCEL: ", "" + val);
+            if(val > 20.0) {
                 noMotion = false;
             }
         }
 
         if(event.sensor.getStringType().equals(Sensor.STRING_TYPE_LIGHT)) {
             float val = event.values[0];
-//            Log.v("LIGHT: ", "" + val);
             if(val > light_threshold) {
                 noLight = false;
             }
@@ -119,7 +125,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
             sm.unregisterListener(this, accelSensor);
             sm.unregisterListener(this, lightSensor);
             int alarmID = _intent.getExtras().getInt("alarmID");
-            Log.v("TAG", "" + alarmID);
+            Log.v("TAG", "Alarm " + alarmID + "has stopped.");
             PendingIntent alarmIntent = PendingIntent.getBroadcast(_context, alarmID, _intent, PendingIntent.FLAG_UPDATE_CURRENT);
             alarmIntent.cancel();
         }

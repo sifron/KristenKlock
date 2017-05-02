@@ -2,6 +2,7 @@ package tech.anora.kristenklock;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import java.util.Calendar;
 
@@ -48,10 +49,12 @@ public class SensorAlarm {
     }
 
     public void turnOff() {
+        Log.v("TAG", "Alarm " + this.get_alarmID() + " is turned off.");
         _isOn = false;
     }
 
     public void turnOn() {
+        Log.v("TAG", "Alarm " + this.get_alarmID() + " is turned on.");
         _isOn = true;
     }
 
@@ -61,6 +64,10 @@ public class SensorAlarm {
 
     public Intent get_intent() {
         return _intent;
+    }
+
+    public void set_intent(Intent _intent) {
+        this._intent = _intent;
     }
 
     public boolean isOn() {

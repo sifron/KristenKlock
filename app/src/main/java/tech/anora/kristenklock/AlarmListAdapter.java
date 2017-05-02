@@ -3,10 +3,12 @@ package tech.anora.kristenklock;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +37,7 @@ public class AlarmListAdapter extends ArrayAdapter<SensorAlarm> {
     public View getView(int position, View convertView, ViewGroup parent)
     {
         // Get the data item for this position
-        SensorAlarm alarm = getItem(position);
+        final SensorAlarm alarm = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.alarm_list_item, parent, false);
@@ -56,7 +58,8 @@ public class AlarmListAdapter extends ArrayAdapter<SensorAlarm> {
                 // Access the row position here to get the correct data item
                 SensorAlarm alarmToDelete = getItem(position);
                 MainActivity.getAlarms().remove(alarmToDelete);
-                MainActivity.getAlarmMgr().cancel(PendingIntent.getBroadcast(alarmToDelete.get_context(), alarmToDelete.get_alarmID(), alarmToDelete.get_intent(), PendingIntent.FLAG_UPDATE_CURRENT));
+                MainActivity.getAlarmMgr().cancel(PendingIntent.getBroadcast(alarmToDelete.get_context(), alarmToDelete.get_alarmID(),
+                        alarmToDelete.get_intent(), PendingIntent.FLAG_UPDATE_CURRENT));
                 notifyDataSetChanged();
             }
         });
@@ -81,19 +84,22 @@ public class AlarmListAdapter extends ArrayAdapter<SensorAlarm> {
                             alarmToToggle.get_intent(), PendingIntent.FLAG_UPDATE_CURRENT));
                 } else {
                     alarmToToggle.turnOn();
+                    Intent intent = new Intent(alarmToToggle.get_context(), AlarmReceiver.class);
+                    intent.putExtra("alarmID", alarmToToggle.get_alarmID());
+                    alarmToToggle.set_intent(intent);
                     PendingIntent alarmIntent = PendingIntent.getBroadcast(alarmToToggle.get_context(), alarmToToggle.get_alarmID(),
-                            alarmToToggle.get_intent(), 0);
+                            intent, 0);
 
-                    Calendar calendar = alarmToToggle.get_calendar();
-                    calendar.setTimeInMillis(System.currentTimeMillis());
-                    calendar.set(Calendar.HOUR_OF_DAY, alarmToToggle.get_calendar().get(Calendar.HOUR_OF_DAY));
-                    calendar.set(Calendar.MINUTE, alarmToToggle.get_calendar().get(Calendar.MINUTE));
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(alarmToToggle.get_calendar().getTimeInMillis());
 
                     //if the alarm is set for a time that has already passed in the
-                    //current day, set it for the next day
-                    if(System.currentTimeMillis() >= calendar.getTimeInMillis()) {
+                    //current day, increment days until date is in future
+                    while(System.currentTimeMillis() >= calendar.getTimeInMillis()) {
                         calendar.add(Calendar.DATE, 1);
                     }
+
+                    Log.v("TAG", "TOGGLE ON - AlarmID: " + alarmToToggle.get_alarmID() + ", Time: " + calendar.getTimeInMillis());
 
                     MainActivity.getAlarmMgr().set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
                 }

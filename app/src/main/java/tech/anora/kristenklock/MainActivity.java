@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             calendar.add(Calendar.DATE, 1);
         }
 
-        SensorAlarm alarm = new SensorAlarm(calendar, 14.0, alarmID, context, intent);
+        SensorAlarm alarm = new SensorAlarm(calendar, 20.0, alarmID, context, intent);
         alarms.add(alarm);
 
         alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         alarmID++;
 
         Log.v("TAG", "Hour: " + hour + ", Minute: " + minute);
-        Log.v("TAG", "" + calendar.getTimeInMillis());
+        Log.v("TAG", "Alarm " + alarm.get_alarmID() + " has been created at " + calendar.getTimeInMillis());
 
     }
 
