@@ -15,33 +15,40 @@ import java.util.List;
 
 public class TimeList extends AppCompatActivity {
 
-    private List<SensorAlarm> alarmsList = MainActivity.getAlarms();
+   /* private List<SensorAlarm> alarmsList = MainActivity.getAlarms();
     private ListView alarmsListView ;
     private ArrayAdapter<String> listAdapter;
-    private List<String> times;
+    private List<String> times;*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_list);
 
-        times = new ArrayList<>();
-        for(SensorAlarm s : alarmsList) {
-            times.add(setTimeString(s.get_calendar()));
-            Log.v("TAG", setTimeString(s.get_calendar()));
-        }
+        ArrayList<SensorAlarm> sensorsArray = (ArrayList<SensorAlarm>)MainActivity.getAlarms();
+        AlarmListAdapter adapter = new AlarmListAdapter(this, sensorsArray);
 
+        ListView listView = (ListView) findViewById(R.id.alarmsList);
+        listView.setAdapter(adapter);
 
-        // Find the ListView resource.
-        alarmsListView = (ListView) findViewById( R.id.alarmsList );
-
-       // listAdapter = new ArrayAdapter<>(this, R.layout.alarm_list_item, R.id.timeText, times);
-        //listAdapter.add("");
-
-        AlarmListAdapter alarmAdapter = new AlarmListAdapter(alarmsList, this);
-
-        alarmsListView.setAdapter(alarmAdapter);
-        //alarmsListView.setAdapter(listAdapter);
+//        times = new ArrayList<>();
+//        for(SensorAlarm s : alarmsList) {
+//            times.add(setTimeString(s.get_calendar()));
+//            Log.v("TAG", setTimeString(s.get_calendar()));
+//        }
+//
+//
+//        // Find the ListView resource.
+//        alarmsListView = (ListView)findViewById(R.id.alarmsList);
+//
+//       // listAdapter = new ArrayAdapter<>(this, R.layout.alarm_list_item, R.id.timeText, times);
+//        //listAdapter.add("");
+//
+//        AlarmListAdapter alarmAdapter = new AlarmListAdapter(alarmsList, this);
+//
+//        alarmsListView.setAdapter(alarmAdapter);
+//        //alarmsListView.setAdapter(listAdapter);
 
     }
 

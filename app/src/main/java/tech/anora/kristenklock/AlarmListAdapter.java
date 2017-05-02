@@ -1,87 +1,51 @@
 package tech.anora.kristenklock;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static tech.anora.kristenklock.R.id.alarmsList;
+
 /**
  * Created by Sifron on 5/1/2017.
  */
 
-public class AlarmListAdapter extends BaseAdapter implements ListAdapter {
+public class AlarmListAdapter extends ArrayAdapter<SensorAlarm> {
 
-    private List<SensorAlarm> alarmsList = MainActivity.getAlarms();
-    private Context context;
-
-    public AlarmListAdapter(List<SensorAlarm> list, Context context)
+    public AlarmListAdapter(Context context, ArrayList<SensorAlarm> alarms)
     {
-        this.alarmsList = list;
-        this.context = context;
+        super(context, 0, alarms);
     }
 
-    @Override
-    public int getCount()
+    public View getView(int position, View convertView, ViewGroup parent)
     {
-        return alarmsList.size();
-    }
-
-    @Override
-    public Object getItem(int position)
-    {
-        return alarmsList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position)
-    {
-        return alarmsList.get(position).get_alarmID();
-    }
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-        if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.alarm_list_item, null);
+        // Get the data item for this position
+        SensorAlarm alarm = getItem(position);
+        // Check if an existing view is being reused, otherwise inflate the view
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.alarm_list_item, parent, false);
         }
+        // Lookup view for data population
+        TextView timeTestView = (TextView) convertView.findViewById(R.id.timeText);
 
-        //Handle TextView and display string from your list
-        TextView listItemText = (TextView)view.findViewById(R.id.timeText);
+        // Populate the data into the template view using the data object
+        timeTestView.setText(setTimeString(alarm.get_calendar()));
 
-        listItemText.setText(setTimeString(alarmsList.get(position).get_calendar()));
+        
 
-        Button deleteButton = (Button)view.findViewById(R.id.deleteButton);
-
-        deleteButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                //do something
-                alarmsList.remove(position); //or some other task
-                notifyDataSetChanged();
-            }
-        });
-
-        Switch toggleSwitch = (Switch)view.findViewById(R.id.timeSwitch);
-        toggleSwitch.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //This is where we can toggle the alarm
-                notifyDataSetChanged();
-            }
-        });
-
-        return view;
+        // Return the completed view to render on screen
+        return convertView;
     }
 
     protected String setTimeString(Calendar alarmCal)
@@ -104,7 +68,7 @@ public class AlarmListAdapter extends BaseAdapter implements ListAdapter {
         if(alarmCal.get(Calendar.MINUTE) < 10)
             timeMin = "0" + timeMin;
 
-        String timeString = "Alarm set for " + timeHour + ":" + timeMin + " " + amOrPm;
+        String timeString = timeHour + ":" + timeMin + " " + amOrPm;
 
         return timeString;
     }
