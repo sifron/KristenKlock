@@ -42,7 +42,17 @@ public class AlarmListAdapter extends ArrayAdapter<SensorAlarm> {
         // Populate the data into the template view using the data object
         timeTestView.setText(setTimeString(alarm.get_calendar()));
 
-        
+        Button deleteButton = (Button) convertView.findViewById(R.id.deleteButton);
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = (Integer) view.getTag();
+                // Access the row position here to get the correct data item
+                SensorAlarm alarmtoDelete = getItem(position);
+                // Do what you want here...
+            }
+        });
 
         // Return the completed view to render on screen
         return convertView;
