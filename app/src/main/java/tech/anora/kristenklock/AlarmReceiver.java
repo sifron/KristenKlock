@@ -19,8 +19,11 @@ import android.util.Log;
 
 import java.util.List;
 
-/**
- * Created by cmakohon on 4/20/17.
+/*
+* Project Title: Kristen Klock
+* Class: COMP590, Spring 2017
+* Date: 5/2/17
+* Authors: Sifron Benjamin and Collin Makohon
  */
 
 public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEventListener {
@@ -125,7 +128,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
             sm.unregisterListener(this, accelSensor);
             sm.unregisterListener(this, lightSensor);
             int alarmID = _intent.getExtras().getInt("alarmID");
-            Log.v("TAG", "Alarm " + alarmID + "has stopped.");
+            Log.v("TAG", "Alarm " + alarmID + " has stopped.");
             PendingIntent alarmIntent = PendingIntent.getBroadcast(_context, alarmID, _intent, PendingIntent.FLAG_UPDATE_CURRENT);
             alarmIntent.cancel();
         }

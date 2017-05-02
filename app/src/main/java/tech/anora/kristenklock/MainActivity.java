@@ -1,3 +1,10 @@
+/*
+* Project Title: Kristen Klock
+* Class: COMP590, Spring 2017
+* Date: 5/2/17
+* Authors: Sifron Benjamin and Collin Makohon
+ */
+
 package tech.anora.kristenklock;
 
 import android.app.AlarmManager;
@@ -87,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
         if (hour > 12)
         {
             timeHour = hour % 12;
+            amOrPm = "PM";
+        } else if(hour == 12) {
+            timeHour = hour;
             amOrPm = "PM";
         }
         else if (hour == 0)

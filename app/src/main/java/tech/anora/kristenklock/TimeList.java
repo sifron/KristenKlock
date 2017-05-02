@@ -6,6 +6,13 @@ import android.view.View;
 import android.widget.ListView;
 import java.util.ArrayList;
 
+/*
+* Project Title: Kristen Klock
+* Class: COMP590, Spring 2017
+* Date: 5/2/17
+* Authors: Sifron Benjamin and Collin Makohon
+ */
+
 public class TimeList extends AppCompatActivity {
 
     @Override

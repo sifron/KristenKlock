@@ -7,8 +7,11 @@ import android.util.Log;
 import java.util.Calendar;
 
 
-/**
- * Created by cmakohon on 5/1/17.
+/*
+* Project Title: Kristen Klock
+* Class: COMP590, Spring 2017
+* Date: 5/2/17
+* Authors: Sifron Benjamin and Collin Makohon
  */
 
 public class SensorAlarm {

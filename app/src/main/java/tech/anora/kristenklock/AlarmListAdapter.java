@@ -23,8 +23,11 @@ import java.util.List;
 
 import static tech.anora.kristenklock.R.id.alarmsList;
 
-/**
- * Created by Sifron on 5/1/2017.
+/*
+* Project Title: Kristen Klock
+* Class: COMP590, Spring 2017
+* Date: 5/2/17
+* Authors: Sifron Benjamin and Collin Makohon
  */
 
 public class AlarmListAdapter extends ArrayAdapter<SensorAlarm> {
@@ -113,13 +116,20 @@ public class AlarmListAdapter extends ArrayAdapter<SensorAlarm> {
     protected String setTimeString(Calendar alarmCal)
     {
         //Convert time to 12 hour time for toast
-        int timeHour;
+        int timeHour = alarmCal.get(Calendar.HOUR_OF_DAY);
         String timeMin = Integer.toString(alarmCal.get(Calendar.MINUTE));
         String amOrPm;
         if (alarmCal.get(Calendar.HOUR_OF_DAY) > 12)
         {
             timeHour = alarmCal.get(Calendar.HOUR_OF_DAY) % 12;
             amOrPm = "PM";
+        } else if(timeHour == 12) {
+            amOrPm = "PM";
+        }
+        else if (timeHour == 0)
+        {
+            timeHour = 12;
+            amOrPm = "AM";
         }
         else
         {
