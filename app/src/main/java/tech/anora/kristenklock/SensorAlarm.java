@@ -1,5 +1,8 @@
 package tech.anora.kristenklock;
 
+import android.content.Context;
+import android.content.Intent;
+
 import java.util.Calendar;
 
 
@@ -11,12 +14,16 @@ public class SensorAlarm {
     private Calendar _calendar;
     private double _shake_thresh;
     private int _alarmID;
+    private Context _context;
+    private Intent _intent;
     private boolean _isOn;
 
-    public SensorAlarm(Calendar calendar, double shake_thresh, int alarmID) {
+    public SensorAlarm(Calendar calendar, double shake_thresh, int alarmID, Context context, Intent intent) {
         _calendar = calendar;
         _shake_thresh = shake_thresh;
         _alarmID = alarmID;
+        _context = context;
+        _intent = intent;
         _isOn = true;
     }
 
@@ -48,4 +55,11 @@ public class SensorAlarm {
         _isOn = true;
     }
 
+    public Context get_context() {
+        return _context;
+    }
+
+    public Intent get_intent() {
+        return _intent;
+    }
 }

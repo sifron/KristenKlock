@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             calendar.add(Calendar.DATE, 1);
         }
 
-        SensorAlarm alarm = new SensorAlarm(calendar, 14.0, alarmID);
+        SensorAlarm alarm = new SensorAlarm(calendar, 14.0, alarmID, context, intent);
         alarms.add(alarm);
 
         alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
@@ -106,10 +106,6 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
-//    public void cancelAlarm() {
-//        alarmMgr.cancel(alarmIntent);
-//    }
-
     public void launchAlarmsList(View view)
     {
         Intent myIntent = new Intent(this, TimeList.class);
@@ -135,4 +131,5 @@ public class MainActivity extends AppCompatActivity {
     public static List<SensorAlarm> getAlarms() {
         return alarms;
     }
+
 }

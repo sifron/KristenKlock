@@ -1,9 +1,11 @@
 package tech.anora.kristenklock;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +44,8 @@ public class AlarmListAdapter extends ArrayAdapter<SensorAlarm> {
         // Populate the data into the template view using the data object
         timeTestView.setText(setTimeString(alarm.get_calendar()));
 
-        Button deleteButton = (Button) convertView.findViewById(R.id.deleteButton);
+        FloatingActionButton deleteButton = (FloatingActionButton) convertView.findViewById(R.id.deleteButton);
+        deleteButton.setTag(position);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +53,9 @@ public class AlarmListAdapter extends ArrayAdapter<SensorAlarm> {
                 int position = (Integer) view.getTag();
                 // Access the row position here to get the correct data item
                 SensorAlarm alarmtoDelete = getItem(position);
-                // Do what you want here...
+                MainActivity.getAlarms().remove(alarmtoDelete);
+                MainActivity.getAlarmMgr().cancel(PendingIntent.getBroadcast(alarmtoDelete.get_context(), alarmtoDelete.get_alarmID(), alarmtoDelete.get_intent(), PendingIntent.FLAG_UPDATE_CURRENT));
+                notifyDataSetChanged();
             }
         });
 
