@@ -62,4 +62,8 @@ public class SensorAlarm {
     public Intent get_intent() {
         return _intent;
     }
+
+    public boolean isOn() {
+        return _isOn;
+    }
 }
