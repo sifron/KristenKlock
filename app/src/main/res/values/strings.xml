@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Kristen Klock</string>
-    <string name="calibration_title">Calibrate Light Level</string>
+    <string name="calibration_title">Calibrate Light Threshold</string>
     <string name="calibration_body">Turn on the lights in your room to the ambient light
         level you would typically have the room set to during awake hours. Tap the "Set" button
     when you are ready.</string>

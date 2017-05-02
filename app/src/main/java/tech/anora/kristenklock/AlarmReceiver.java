@@ -31,6 +31,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
     private SensorManager sm;
     private Sensor accelSensor;
     private Sensor lightSensor;
+    private SensorAlarm alarmGoingOff;
     private double light_threshold;
     private List<Sensor> l;
     boolean noLight = true;
@@ -47,7 +48,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
         light_threshold = MainActivity.getLightThreshold() - 10;
 
         Log.v("TAG", "Alarm has gone off!");
-        SensorAlarm alarmGoingOff = null;
+        alarmGoingOff = null;
         List<SensorAlarm> alarms = MainActivity.getAlarms();
         for(SensorAlarm alarm : alarms) {
             if(alarm.get_alarmID() == _intent.getExtras().getInt("alarmID")) {
@@ -125,6 +126,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver implements SensorEve
 
         if(!noMotion && !noLight) {
             r.stop();
+            alarmGoingOff.turnOff();
             sm.unregisterListener(this, accelSensor);
             sm.unregisterListener(this, lightSensor);
             int alarmID = _intent.getExtras().getInt("alarmID");
