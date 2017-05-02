@@ -89,6 +89,11 @@ public class MainActivity extends AppCompatActivity {
             timeHour = hour % 12;
             amOrPm = "PM";
         }
+        else if (hour == 0)
+        {
+            timeHour = 12;
+            amOrPm = "AM";
+        }
         else
         {
             timeHour = hour;
